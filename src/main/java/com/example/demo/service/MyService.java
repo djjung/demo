@@ -10,16 +10,27 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 @Service
 public class MyService {
 	
+	/**
+	 * Neflix 회로차단기 샘플
+	 * 1. 정상응답시 원래 메소드 실행
+	 * 2. 3초 이상 응답 지연시 Fallback 메소드 실행 
+	 */
+	
 	@HystrixCommand(
 		commandProperties = {
 			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
-		}
+		},
+		fallbackMethod = "getFallbackText"
 	)
 	
 	public String getText() {
 		runInRandomTime();
 		
 		return "I am service text";
+	}
+	
+	public String getFallbackText() {
+		return "I am fallback text";
 	}
 	
 	private void runInRandomTime() {
