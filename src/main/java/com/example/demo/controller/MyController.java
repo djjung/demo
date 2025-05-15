@@ -16,6 +16,7 @@ public class MyController {
 	public String test() {
 		String result = null;
 		result = myService.getText();
+
 		
 		return result;
 	}
